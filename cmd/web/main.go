@@ -8,9 +8,9 @@ import (
 
 	"github.com/alexedwards/scs/v2"
 
-	"github.com/cxt314/learning-bnb-webapp/pkg/config"
-	"github.com/cxt314/learning-bnb-webapp/pkg/handlers"
-	"github.com/cxt314/learning-bnb-webapp/pkg/render"
+	"github.com/cxt314/learning-bnb-webapp/internal/config"
+	"github.com/cxt314/learning-bnb-webapp/internal/handlers"
+	"github.com/cxt314/learning-bnb-webapp/internal/render"
 )
 
 const portNumber = ":8080"

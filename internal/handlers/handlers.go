@@ -6,9 +6,9 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/cxt314/learning-bnb-webapp/pkg/config"
-	"github.com/cxt314/learning-bnb-webapp/pkg/models"
-	"github.com/cxt314/learning-bnb-webapp/pkg/render"
+	"github.com/cxt314/learning-bnb-webapp/internal/config"
+	"github.com/cxt314/learning-bnb-webapp/internal/models"
+	"github.com/cxt314/learning-bnb-webapp/internal/render"
 )
 
 // Repo the repository used by the handlers

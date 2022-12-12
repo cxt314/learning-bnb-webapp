@@ -7,8 +7,8 @@ import (
 	"net/http"
 	"path/filepath"
 
-	"github.com/cxt314/learning-bnb-webapp/pkg/config"
-	"github.com/cxt314/learning-bnb-webapp/pkg/models"
+	"github.com/cxt314/learning-bnb-webapp/internal/config"
+	"github.com/cxt314/learning-bnb-webapp/internal/models"
 	"github.com/justinas/nosurf"
 )
 
