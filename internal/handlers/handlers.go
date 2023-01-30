@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 	"strconv"
@@ -155,6 +156,46 @@ func (m *Repository) PostReservation(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/", http.StatusTemporaryRedirect)
 		return
 	}
+
+	// send email notifications - first to guest
+	htmlMessage := fmt.Sprintf(`
+		<strong>Reservation Confirmation</strong><br>
+		Dear %s, <br>
+		This is to confirm your resevation from %s to %s.	
+	`, reservation.FirstName, reservation.StartDate.Format("2006-01-02"), reservation.EndDate.Format("2006-01-02"))
+
+	msg := models.MailData{
+		To:       reservation.Email,
+		From:     "me@here.com",
+		Subject:  "Reservation Confirmation",
+		Content:  htmlMessage,
+		Template: "basic.html",
+	}
+
+	m.App.MailChan <- msg
+
+	// send email notification to property owner
+	htmlMessage = fmt.Sprintf(`
+		<strong>New Reservation</strong><br>
+		A new reservation has been made for<br>
+		Room: %s<br>
+		Start Date: %s<br>
+		End Date: %s<br>
+		Name: %s %s<br>
+		Email: %s<br>
+		Phone: %s<br>
+		`, reservation.Room.RoomName, reservation.StartDate.Format("2006-01-02"), reservation.EndDate.Format("2006-01-02"),
+		reservation.FirstName, reservation.LastName, reservation.Email, reservation.Phone)
+
+	msg = models.MailData{
+		To:       "owner@property.com",
+		From:     "me@here.com",
+		Subject:  "New Reservation",
+		Content:  htmlMessage,
+		Template: "basic.html",
+	}
+
+	m.App.MailChan <- msg
 
 	m.App.Session.Put(r.Context(), "reservation", reservation)
 
